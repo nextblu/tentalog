@@ -5,7 +5,7 @@ import coloredlogs
 import yaml
 
 
-def setup_logging(path='tentalog/default_logging.yaml', level=logging.INFO):
+def setup_logging(path='default_logging.yaml', level=logging.INFO):
     if os.path.exists(path):
         with open(path, 'rt') as f:
             try:
