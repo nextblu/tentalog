@@ -24,7 +24,7 @@ def setup_logging(path="default_logging.yaml", level=logging.INFO):
                 coloredlogs.install(level=level)
     else:
         # file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "default_logging.yaml")
-        file_path = os.path.join(os.path.dirname(__file__), 'default_configuration.yaml')
+        file_path = os.path.join(os.path.dirname(__file__), "default_configuration.yaml")
         print(file_path)
         with open(file_path) as f:
             try:
