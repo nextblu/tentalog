@@ -21,5 +21,3 @@ def setup_logging(path='default_logging.yaml', level=logging.INFO):
         print('Using default configuration.')
         logging.basicConfig(level=level)
         coloredlogs.install(level=level)
-
-setup_logging()
