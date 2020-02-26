@@ -3,7 +3,10 @@ import logging.config
 import logging
 import coloredlogs
 import yaml
-
+try:
+    from importlib import resources as res
+except ImportError:
+    import importlib_resources as res
 
 def setup_logging(path="default_logging.yaml", level=logging.INFO):
     if os.path.exists(path):
@@ -18,6 +21,14 @@ def setup_logging(path="default_logging.yaml", level=logging.INFO):
                 logging.basicConfig(level=level)
                 coloredlogs.install(level=level)
     else:
-        print("Using default configuration.")
-        logging.basicConfig(level=level)
-        coloredlogs.install(level=level)
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "default_logging.yaml")
+        with res.open_binary(file_path) as f:
+            try:
+                config = yaml.safe_load(f.read())
+                logging.config.dictConfig(config)
+                coloredlogs.install()
+            except Exception as e:
+                print("Error in Logging Configuration. Using default configuration")
+                print(e)
+                logging.basicConfig(level=level)
+                coloredlogs.install(level=level)

@@ -18,6 +18,7 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
     url='https://github.com/nextblu/tentalog',
     install_requires=install_requires,
-    python_requires='>=3.6.0'
+    python_requires='>=3.6.0',
+    include_package_data=True
 )
 
