@@ -2,19 +2,19 @@ version: 1
 disable_existing_loggers: false
 
 formatters:
-  default:
+  defaultFormatter:
     format: "%(asctime)s - %(filename)s - %(levelname)s - %(message)s"
 
 handlers:
   console:
     class: logging.StreamHandler
     level: DEBUG
-    formatter: default
+    formatter: defaultFormatter
   file:
     class: logging.handlers.TimedRotatingFileHandler
     level: INFO
-    formatter: default
-    filename: ./.logs/log.log
+    formatter: defaultFormatter
+    filename: ./logs/log.log
     when: midnight
     interval: 15
     backupCount: 0
