@@ -32,10 +32,9 @@ def setup(path="default_logging.yaml"):
                     coloredlogs.install(logger=logger)
 
         except Exception as e:
-
             logging.basicConfig(level=logging.DEBUG)
-            logger = logging.getLogger()
-            print(f"Error in Logging Configuration. Using default configuration: {e}")
+            logger = logging.getLogger('root')
+            logger.error("Error in Logging Configuration. Using default configuration", e)
             coloredlogs.install(level=logging.DEBUG, logger=logger)
 
 
