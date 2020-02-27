@@ -9,31 +9,35 @@ try:
 except ImportError:
     import importlib_resources as res
 
+logger = None
 
-def setup_logging(path="default_logging.yaml", level=logging.INFO):
-    if os.path.exists(path):
-        with open(path, "rt") as f:
-            try:
-                config = yaml.safe_load(f.read())
-                logging.config.dictConfig(config)
-                coloredlogs.install()
-            except Exception as e:
-                print("Error in Logging Configuration. Using default configuration")
-                print(e)
-                logging.basicConfig(level=level)
-                coloredlogs.install(level=level)
-    else:
-        file_path = os.path.join(os.path.dirname(__file__), "default_configuration.yaml")
-        if not os.path.exists(os.path.join(os.getcwd(), "logs")):
-            os.makedirs(os.path.join(os.getcwd(), "logs"))
-        print(file_path)
-        with open(file_path) as f:
-            try:
-                config = yaml.safe_load(f.read())
-                logging.config.dictConfig(config)
-                coloredlogs.install()
-            except Exception as e:
-                print("Error in Logging Configuration. Using default configuration")
-                print(e)
-                logging.basicConfig(level=level)
-                coloredlogs.install(level=level)
+
+def setup(path="default_logging.yaml"):
+    global logger
+    if not os.path.exists(path):
+        path = os.path.join(os.path.dirname(__file__), "default_configuration.yaml")
+    if not os.path.exists(os.path.join(os.getcwd(), "logs")):
+        os.makedirs(os.path.join(os.getcwd(), "logs"))
+    with open(path) as f:
+        try:
+            config = yaml.safe_load(f.read())
+            logging.config.dictConfig(config)
+            logger = logging.getLogger('root')
+            if 'coloredlogs' in config and 'active' in config['coloredlogs']:
+                if 'formatter' in config['coloredlogs']:
+                    print(f'{config["formatters"][config["coloredlogs"]["formatter"]]["format"]}')
+                    coloredlogs.install(logger=logger,
+                                        fmt=config['formatters'][config['coloredlogs']['formatter']]['format'])
+                else:
+                    coloredlogs.install(logger=logger)
+
+        except Exception as e:
+
+            logging.basicConfig(level=logging.DEBUG)
+            logger = logging.getLogger()
+            print(f"Error in Logging Configuration. Using default configuration: {e}")
+            coloredlogs.install(level=logging.DEBUG, logger=logger)
+
+
+def get_logger():
+    return logger
