@@ -21,8 +21,10 @@ class Tentacle:
                 if "loggers" in config:
                     if self.__name in config["loggers"]:
                         self.__logger = logging.getLogger(self.__name)
+                        self.__logger.setLevel(config["loggers"][self.__name]["level"])
                     else:
                         self.__logger = logging.getLogger("root")
+                        self.__name = "root"
                         self.__logger.warning(f"The name {name} was not found in configuration. "
                                               f"You are currently using the root logger instead.")
                 else:
@@ -30,10 +32,10 @@ class Tentacle:
                     self.__logger.warning("No configured loggers found. You are currently using the root logger.")
                 if 'coloredlogs' in config and 'active' in config['coloredlogs']:
                     if 'formatter' in config['coloredlogs']:
-                        coloredlogs.install(logger=self.__logger,
+                        coloredlogs.install(logger=self.__logger, level=config["loggers"][self.__name]["level"],
                                             fmt=config['formatters'][config['coloredlogs']['formatter']]['format'])
                     else:
-                        coloredlogs.install(logger=self.__logger)
+                        coloredlogs.install(logger=self.__logger, level=config["loggers"][self.__name]["level"])
             except yaml.YAMLError as e:
                 logging.basicConfig(level=logging.DEBUG)
                 self.__logger = logging.getLogger(self.__name)
