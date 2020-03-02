@@ -21,7 +21,7 @@ handlers:
 
 loggers:
   root:
-    level: NOTSET
+    level: DEBUG
     handlers: [console, file]
     propagate: no
 
