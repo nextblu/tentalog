@@ -1,13 +1,13 @@
 import unittest
-import tentalog
 import logging
+from tentalog import Tentacle
 
 
 class TestTentalog(unittest.TestCase):
 
-    def right_level(self):
-        tentalog.setup_logging()
-        logger = logging.getLogger('root')
+    def test_level(self):
+        tentacle = Tentacle()
+        logger = tentacle.logger
         self.assertEqual(logger.level, logging.DEBUG)
 
 
