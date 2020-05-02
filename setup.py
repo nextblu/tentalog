@@ -8,7 +8,7 @@ with open("requirements.txt") as fp:
 
 setuptools.setup(
     name='tentalog',
-    version='0.1.0',
+    version='0.2.0',
     description='Utility package for logging in Python',
     author='NextBlu',
     author_email='hello@nextblu.com',
