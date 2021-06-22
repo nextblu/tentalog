@@ -1,6 +1,6 @@
 certifi==2021.5.30
 chardet==4.0.0
-coloredlogs==15.0
+coloredlogs==15.0.1
 humanfriendly==9.1
 idna==2.10
 pyreadline==2.1
